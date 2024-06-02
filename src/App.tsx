@@ -4,12 +4,17 @@ import clickSound from "./assets/sounds/click.wav";
 import CircleIcon from "./components/icons/circle";
 import CrossIcon from "./components/icons/cross";
 import { motion } from "framer-motion";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { incrementScore } from "./features/score/gameSlice";
 
 function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   const [result, setResult] = useState<"X" | "O" | "draw" | null>(null);
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
+
+  const score = useAppSelector((state) => state.game);
+  const dispatch = useAppDispatch();
 
   const resultMessage =
     result === "X"
@@ -35,6 +40,7 @@ function App() {
       if (board[a] && board[a] === board[b] && board[a] === board[c]) {
         setIsGameOver(true);
         setResult(board[a]);
+        dispatch(incrementScore(board[a]));
         return;
       }
     }
@@ -42,6 +48,7 @@ function App() {
     if (board.every((cell) => cell)) {
       setIsGameOver(true);
       setResult("draw");
+      dispatch(incrementScore("draw"));
     }
   }, [board]);
 
