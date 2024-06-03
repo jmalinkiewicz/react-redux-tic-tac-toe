@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type GameState = {
+export type GameState = {
   players: {
     X: {
       name: string;

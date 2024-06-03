@@ -4,7 +4,7 @@ import clickSound from "./assets/sounds/click.wav";
 import CircleIcon from "./components/icons/circle";
 import CrossIcon from "./components/icons/cross";
 import { motion } from "framer-motion";
-import { useAppDispatch } from "./hooks";
+import { useAppDispatch, useAppSelector } from "./hooks";
 import { incrementScore } from "./features/score/gameSlice";
 import ScorePanel from "./components/scorePanel/scorePanel";
 
@@ -15,12 +15,13 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
 
   const dispatch = useAppDispatch();
+  const store = useAppSelector((state) => state.game);
 
   const resultMessage =
     result === "X"
-      ? "Player X wins"
+      ? `${store.players.X.name} wins`
       : result === "O"
-      ? "Player O wins"
+      ? `${store.players.O.name} wins`
       : "It's a draw";
 
   useEffect(() => {
@@ -64,7 +65,8 @@ function App() {
 
   return (
     <>
-      <div className="h-screen w-screen flex justify-center items-center">
+      <div className="h-screen w-screen flex flex-col justify-between py-24 items-center">
+        <ScorePanel player="X" sided="left" />
         <div className="relative">
           <div className="grid grid-cols-3 max-h-96 max-w-96">
             {board.map((cell, index) => (
@@ -88,7 +90,10 @@ function App() {
             ))}
           </div>
           <h1 className="absolute -bottom-16 w-full text-center">
-            Current player: {currentPlayer}
+            Turn:{" "}
+            {currentPlayer === "X"
+              ? store.players.X.name
+              : store.players.O.name}
           </h1>
           {isGameOver && (
             <motion.div
@@ -118,6 +123,7 @@ function App() {
             </motion.div>
           )}
         </div>
+        <ScorePanel player="O" sided="right" />
       </div>
     </>
   );
