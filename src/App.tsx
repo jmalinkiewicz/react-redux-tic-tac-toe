@@ -13,6 +13,7 @@ function App() {
   const [result, setResult] = useState<"X" | "O" | "draw" | null>(null);
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
+  const [showScore, setShowScore] = useState(false);
 
   const dispatch = useAppDispatch();
   const store = useAppSelector((state) => state.game);
@@ -65,8 +66,12 @@ function App() {
 
   return (
     <>
-      <div className="h-screen w-screen flex flex-col justify-between py-24 items-center">
-        <ScorePanel player="X" sided="left" />
+      <div
+        className={`h-screen w-screen flex flex-col ${
+          showScore ? "justify-between" : "justify-center"
+        } py-24 items-center`}
+      >
+        {showScore && <ScorePanel player="X" sided="left" />}
         <div className="relative">
           <div className="grid grid-cols-3 max-h-96 max-w-96">
             {board.map((cell, index) => (
@@ -123,8 +128,14 @@ function App() {
             </motion.div>
           )}
         </div>
-        <ScorePanel player="O" sided="right" />
+        {showScore && <ScorePanel player="O" sided="right" />}
       </div>
+      <button
+        onClick={() => setShowScore(!showScore)}
+        className="absolute bottom-6 right-8"
+      >
+        {!showScore ? "show" : "hide"} score
+      </button>
     </>
   );
 }
