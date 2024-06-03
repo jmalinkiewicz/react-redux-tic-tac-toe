@@ -4,8 +4,9 @@ import clickSound from "./assets/sounds/click.wav";
 import CircleIcon from "./components/icons/circle";
 import CrossIcon from "./components/icons/cross";
 import { motion } from "framer-motion";
-import { useAppDispatch, useAppSelector } from "./hooks";
+import { useAppDispatch } from "./hooks";
 import { incrementScore } from "./features/score/gameSlice";
+import ScorePanel from "./components/scorePanel/scorePanel";
 
 function App() {
   const [isGameOver, setIsGameOver] = useState(false);
@@ -13,7 +14,6 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
 
-  const score = useAppSelector((state) => state.game);
   const dispatch = useAppDispatch();
 
   const resultMessage =
@@ -66,9 +66,13 @@ function App() {
     <>
       <div className="h-screen w-screen flex justify-center items-center">
         <div className="relative">
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-3 max-h-96 max-w-96">
             {board.map((cell, index) => (
-              <div className={`h-32 w-32 p-2 cell ${"cell" + "-" + index}`}>
+              <div
+                className={`h-24 w-24 sm:h-32 sm:w-32 p-2 cell ${
+                  "cell" + "-" + index
+                }`}
+              >
                 <motion.div
                   whileHover={cell ? {} : { scale: 1.05 }}
                   whileTap={cell ? {} : { scale: 0.95 }}
