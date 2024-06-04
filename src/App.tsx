@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import clickSound from "./assets/sounds/click.wav";
 import CircleIcon from "./components/icons/circle";
 import CrossIcon from "./components/icons/cross";
 import { motion } from "framer-motion";
 import { useAppDispatch, useAppSelector } from "./hooks";
 import { incrementScore } from "./features/score/gameSlice";
 import ScorePanel from "./components/scorePanel/scorePanel";
+import useSound from "use-sound";
+import click from "/click.mp3";
 
 function App() {
   const [isGameOver, setIsGameOver] = useState(false);
@@ -15,6 +16,7 @@ function App() {
   const [currentPlayer, setCurrentPlayer] = useState<"X" | "O">("X");
   const [showScore, setShowScore] = useState(false);
 
+  const [playClick] = useSound(click, { volume: 1 });
   const dispatch = useAppDispatch();
   const store = useAppSelector((state) => state.game);
 
@@ -57,7 +59,7 @@ function App() {
   function handleClick(index: number) {
     if (board[index]) return;
 
-    new Audio(clickSound).play();
+    playClick();
     const newBoard = [...board];
     newBoard[index] = currentPlayer;
     setCurrentPlayer(currentPlayer === "X" ? "O" : "X");
