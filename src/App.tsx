@@ -69,9 +69,9 @@ function App() {
   return (
     <>
       <div
-        className={`h-screen w-screen flex flex-col ${
+        className={`h-full w-screen flex flex-col ${
           showScore ? "justify-between" : "justify-center"
-        } py-24 items-center`}
+        } py-12 tall:py-24 items-center`}
       >
         {showScore && <ScorePanel player="X" sided="left" />}
         <div className="relative">
@@ -96,12 +96,25 @@ function App() {
               </div>
             ))}
           </div>
-          <h1 className="absolute -bottom-16 w-full text-center">
-            Turn:{" "}
-            {currentPlayer === "X"
-              ? store.players.X.name
-              : store.players.O.name}
-          </h1>
+          <div className="absolute -bottom-16 w-full text-center flex flex-col">
+            <span>
+              {" "}
+              Turn:{" "}
+              {currentPlayer === "X"
+                ? store.players.X.name
+                : store.players.O.name}
+            </span>
+            <span
+              onClick={() => {
+                setBoard(Array(9).fill(null));
+                setCurrentPlayer("X");
+                setIsGameOver(false);
+              }}
+              className="text-blue-900 font-semibold hover:underline hover:cursor-pointer"
+            >
+              reset game
+            </span>
+          </div>
           {isGameOver && (
             <motion.div
               initial={{ y: "-10vh", opacity: 0 }}

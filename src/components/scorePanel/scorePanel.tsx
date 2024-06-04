@@ -38,6 +38,7 @@ export default function ScorePanel({
           );
         }}
         value={store.players[player].name}
+        spellCheck={false}
       />
       <p>Score: {store.players[player].score}</p>
     </div>
