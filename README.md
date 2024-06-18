@@ -10,6 +10,23 @@ In the bottom right corner, click show score to display player names and game sc
 
 - React 18.2.0
 - React-Redux 9.1.2
-- TailwindCSS
+- Tailwind CSS
 - Framer Motion
 - Typescript
+
+## Run the app
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/jmalinkiewicz/react-redux-tic-tac-toe.git
+   ```
+2. If you don't have Node.js installed, go to https://nodejs.org/en and install it
+3. Install all the necessary dependencies:
+   ```bash
+   npm install
+   ```
+4. Run the app:
+   ```bash
+   npm run dev
+   ```
+5. The app should be accessible at http://localhost:5173/react-redux-tic-tac-toe/
